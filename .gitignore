@@ -15,6 +15,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+*.jpg
+*.jpeg
+*.png
+*.session
+.ipynb_checkpoints/
+
 # Virtual environments
 venv/
 env/
