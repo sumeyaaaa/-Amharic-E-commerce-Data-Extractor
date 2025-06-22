@@ -1,6 +1,6 @@
 #
 # DVC local storage
-.data/dvc_file/
+data
 # removing config file from pushing so i can keep my privacy
 src/config.py
 notebook/task-2/conll_ready_tokenized.txt
