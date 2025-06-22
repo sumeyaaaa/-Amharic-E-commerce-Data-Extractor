@@ -1,60 +1,82 @@
 # -Amharic-E-commerce-Data-Extractor
 Amharic E-Commerce Entity Extraction is a machine learning pipeline that scrapes Amharic Telegram e-commerce posts and fine-tunes a multilingual transformer model to extract key business entities like Product, Price, and Location,  helping EthioMart become the central hub for Telegram-based digital commerce in Ethiopia.
 
----
-## 📁 Directory Structure of AMHARIC-E-COMMERCE-DATA-EXTRACTOR/
+This project is part of a data annotation and modeling pipeline for Amharic Telegram e-commerce channels. It includes data scraping, preprocessing, manual annotation in CoNLL format, and visualizations.
+--
 
-├── .github/
-├── .venv/
+## 📁 Directory Structure of AMHARIC-E-COMMERCE-DATA-EXTRACTOR
+
+```
+├── .github/                             # GitHub actions and workflows
+├── .venv/                               # Python virtual environment
 ├── data/
-│ ├── processed/
-│ │ ├── conull.csv # Final labeled data in CoNLL table format
-│ │ ├── telegram_scraped_data_cleaned.csv# Cleaned Telegram messages
-│ │ └── top_30_messages_per_channel.csv # Selected top messages per channel for annotation
-│ ├── raw/
-│ │ ├── images/ # Folder for downloaded product images
-│ │ └── telegram_scraped_data.csv # Raw scraped messages
+│   ├── processed/
+│   │   ├── conull.csv                   # Final labeled data in CoNLL table format
+│   │   ├── telegram_scraped_data_cleaned.csv  # Cleaned Telegram messages
+│   │   └── top_30_messages_per_channel.csv    # Top 30 messages per channel for annotation
+│   ├── raw/
+│   │   ├── images/                      # Downloaded product images
+│   │   └── telegram_scraped_data.csv   # Raw scraped Telegram messages
 │
-├── models/ # Folder for storing fine-tuned NER models
+├── models/                              # Folder for storing fine-tuned NER models
 │
 ├── notebook/
-│ ├── task-1/
-│ │ ├── normalization_and_tokenization.ipynb # Preprocessing pipeline notebook
-│ │ ├── scrapper_session.session # Telegram session file
-│ │ └── scrapping.ipynb # Data scraping script using Telethon
-│ ├── task-2/
-│ │ ├── coNull.ipynb # CoNLL labeling and coverage analysis
-│ │ └── conll_ready_tokenized.txt # Token-per-line file for manual annotation
+│   ├── task-1/
+│   │   ├── normalization_and_tokenization.ipynb # Preprocessing pipeline
+│   │   ├── scrapper_session.session              # Telethon session file
+│   │   └── scrapping.ipynb                       # Telegram scraping script
+│   ├── task-2/
+│   │   ├── coNull.ipynb                          # CoNLL labeling and analysis
+│   │   └── conll_ready_tokenized.txt            # Tokenized text for manual labeling
 │
 ├── src/
-│ ├── config.py # Channel list, output paths, phone number
-│ ├── pre_processing.py # Amharic text normalization/cleaning
-│ ├── scrapper.py # Telegram client & scraping logic
+│   ├── config.py                    # Channel list, phone, and output paths
+│   ├── pre_processing.py            # Amharic text cleaning and normalization
+│   ├── scrapper.py                  # Telegram scraping with Telethon
+│   ├── coNLL.py                     # Exporting CoNLL formatted files and label analysis
+│   └── visualization.py            # Word counts, channel stats, font-safe Amharic plots
 │
-├── requirements.txt # Python dependencies
-├── .gitignore
-└── README.md # Project documentation (you are here)
+├── requirements.txt                 # Python dependencies
+├── .gitignore                       # Files to ignore by Git
+└── README.md                        # This file
+```
 
-yaml
-Copy
-Edit
+---
 
-## 🧠 Key Tasks
+## 🔨 Setup & Installation
 
-### Task 1: Data Ingestion and Preprocessing
-- Scrapes messages from Ethiopian Telegram e-commerce channels.
-- Cleans and normalizes Amharic text.
-- Outputs: `telegram_scraped_data_cleaned.csv`
+```bash
+# Clone the repo
+$ git clone https://github.com/sumeyaaaa/-Amharic-E-commerce-Data-Extractor.git
+$ cd -Amharic-E-commerce-Data-Extractor
 
-### Task 2: NER Data Preparation
-- Selects top 30 longest messages per channel for rich labeling.
-- Tokenizes messages and exports to CoNLL-ready `.txt` format.
-- Manual annotation stored in `conull.csv`.
-- Outputs: 
-  - `top_30_messages_per_channel.csv`  
-  - `conll_ready_tokenized.txt`  
-  - `conull.csv`
+# Create virtual environment
+$ python -m venv .venv
+$ .venv\Scripts\activate      # On Windows
 
+# Install dependencies
+$ pip install -r requirements.txt
+```
+
+---
+
+## 📌 Key Tasks
+
+### ✅ Task 1: Scraping & Preprocessing
+- Scrape Amharic e-commerce content using **Telethon**.
+- Normalize and clean the Amharic text.
+- Select top 30 messages per channel.
+
+### ✅ Task 2: CoNLL Annotation Prep
+- Export cleaned tokens in a `.txt` file ready for manual labeling.
+- Load manually labeled CoNLL table and compute label coverage.
+
+### 📊 Visualizations
+- Top N most common words
+- Bar chart of message counts per channel
+- Custom font support for Amharic text using `Abyssinica SIL`
+
+---
 ### Task 3–5 (Planned):
 - Fine-tune multilingual NER models (XLM-Roberta, BERT, etc.)
 - Evaluate model with metrics: F1-score, Precision, Recall
@@ -96,6 +118,62 @@ After cleaning:
 - Build a scoring engine to rank vendors based on posting frequency, product diversity, and customer engagement.
 
 ---
+
+
+## 📦 Module Overview
+
+### `src/config.py`
+Configuration: phone number, channel usernames, and file paths.
+
+### `src/pre_processing.py`
+- Clean Amharic text (remove punctuations, links, emojis).
+- Normalize characters for consistent tokenization.
+
+### `src/scrapper.py`
+- Login and fetch messages using Telethon.
+- Save raw messages with metadata.
+
+### `src/coNLL.py`
+- Tokenizes messages and exports token-per-line `.txt`.
+- Loads labeled data and analyzes how many tokens are labeled.
+
+### `src/visualization.py`
+- `plot_channel_distribution()` for message counts.
+- `plot_top_words()` to show frequent words in Amharic (with font).
+
+---
+
+## 📊 Amharic Font Setup for Visualization
+To render Amharic glyphs in plots:
+1. Download [Abyssinica SIL](https://software.sil.org/abyssinica/download/)
+2. Place `AbyssinicaSIL-Regular.ttf` in a `fonts/` directory
+3. Use the font in visualization:
+
+```python
+plot_top_words(
+  df,
+  text_column="text",
+  top_n=20,
+  title="ከፍተኛ የተደገመ ቃላት",
+  font_path="fonts/AbyssinicaSIL-Regular.ttf"
+)
+```
+
+---
+
+## 🧠 Future Improvements
+- Train a Named Entity Recognition (NER) model on labeled CoNLL data
+- Expand to multi-platform Amharic datasets
+- Improve normalization for OCR text
+
+---
+
+## 📩 Contact
+Developed by [@sumeyaaaa](https://github.com/sumeyaaaa)
+
+---
+
+**Note**: This project is part of a 10 Academy Week 4 challenge.
 
 ## 🧪 Setup Instructions
 
