@@ -77,11 +77,103 @@ $ pip install -r requirements.txt
 - Custom font support for Amharic text using `Abyssinica SIL`
 
 ---
-### Task 3–5 (Planned):
-- Fine-tune multilingual NER models (XLM-Roberta, BERT, etc.)
-- Evaluate model with metrics: F1-score, Precision, Recall
-- Interpret predictions using SHAP or LIME
-- Save final model under `models/`
+###  Task 3: Fine-Tune NER Model
+Use pretrained models:
+
+xlm-roberta-base
+
+bert-tiny-amharic
+
+afroxlmr
+
+Tokenize and align labels
+
+Train using Hugging Face’s Trainer API
+
+###  Task 4: Model Comparison
+Evaluate multiple models (XLM-R, DistilBERT, mBERT)
+
+Compare F1-score, training speed, token alignment issues
+
+Select the best for production
+
+###  Task 5: Interpretability with SHAP & LIME
+Use SHAP to analyze token-level contributions
+
+Use LIME for local explanations on misclassified entities
+
+Identify weaknesses in model handling ambiguous or nested entities
+
+###  Task 6: FinTech Vendor Scorecard
+Compute per-vendor metrics:
+
+🕒 Posts per week (activity)
+
+👁️ Average views per post (engagement)
+
+💰 Average product price (business profile)
+
+###  Combine into a custom Lending Score
+
+python
+Copy
+Edit
+lending_score = (avg_views * 0.5) + (posts_per_week * 0.5)
+Present results in a comparative table
+
+###  Learning Outcomes
+By completing this project, you will:
+
+Build a full-stack NLP pipeline from raw data collection to model interpretation
+
+Adapt LLMs (like XLM-R) to low-resource languages (Amharic)
+
+Use SHAP and LIME for trustworthy model deployment
+
+Design analytics tools for FinTech and e-commerce decision-making
+
+###  Dependencies
+bash
+Copy
+Edit
+transformers
+datasets
+pandas
+numpy
+telethon
+scikit-learn
+shap
+lime
+matplotlib
+Install them via:
+
+bash
+Copy
+Edit
+pip install -r requirements.txt
+📎 References
+Getting Started with Hugging Face NER
+
+SHAP Documentation
+
+LIME GitHub Repo
+
+Amharic NER Dataset
+
+###  Final Deliverables
+✅ GitHub repo with all scripts and models
+
+✅ PDF Report:
+
+###  Methodology
+
+Model results
+
+Vendor scorecard
+
+Interpretation summary
+
+
 
 ---
 
